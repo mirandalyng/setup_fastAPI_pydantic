@@ -25,3 +25,41 @@ $ uv add "fastapi[standard]"
 ```
 $ uv add requests
 ```
+
+### Run the app
+
+```
+$ fastapi run dev main.py
+```
+
+Visit : localhost:8000
+
+### Psycopg3 installation
+
+```
+$ uv add "psycopg[binary]"
+$ uv add "psycopg[pool]"
+```
+
+## Main
+
+**Import:**
+
+```
+from typing import Union
+from fastapi import FastAPI, status
+
+#Example for importing schema
+from schema.product import ProductSchema
+
+import requests
+
+```
+
+## User Schema
+
+**Import:**
+
+```
+from pydantic import BaseModel
+```
