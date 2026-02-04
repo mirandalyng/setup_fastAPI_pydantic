@@ -1,6 +1,5 @@
-def main():
-    print("Hello from setup-fastapi-pydantic!")
+from typing import Union
 
+from fastapi import FastAPI
 
-if __name__ == "__main__":
-    main()
+app = FastAPI(title="My first API")
