@@ -14,3 +14,7 @@ class ProductSchema(BaseModel):
     category: str
     image: str
     rating: RateProcuctSchema
+
+
+class CatogorySchema(BaseModel):
+    category: str

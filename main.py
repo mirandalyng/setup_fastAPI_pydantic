@@ -1,7 +1,7 @@
 # Import:
 from typing import Union
 from fastapi import FastAPI, status
-from schema.product import ProductSchema
+from schema.product import ProductSchema, CatogorySchema
 import requests
 from fastapi import HTTPException
 
@@ -35,7 +35,7 @@ def root():
 # def get_products():
 #     return productList
 
-# user existing API
+# # user existing API
 # @app.get("/products", response_model=list[ProductSchema])
 # def get_API_products() -> list[ProductSchema]:
 #     # 1 fetch data from the external API
@@ -52,9 +52,28 @@ def root():
 #     return procucts_data
 
 
+# @app.get("/products", response_model=list[ProductSchema])
+# def get_products() -> list[ProductSchema]:
+#     response = requests.get("https://fakestoreapi.com/products")
+#     response_json = response.json()
+
+#     products: list[ProductSchema] = []
+
+#     for item in response_json:
+#         product = ProductSchema(**item)
+#         products.append(product)
+
+    # return list(products)
+
+
+# combination of the 2 above
 @app.get("/products", response_model=list[ProductSchema])
-def get_products() -> list[ProductSchema]:
+def get_products_API() -> list[ProductSchema]:
     response = requests.get("https://fakestoreapi.com/products")
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="External API error")
+
     response_json = response.json()
 
     products: list[ProductSchema] = []
@@ -64,3 +83,23 @@ def get_products() -> list[ProductSchema]:
         products.append(product)
 
     return list(products)
+
+
+# get the category names
+@app.get("/categories", response_model=list[CatogorySchema])
+def get_categories() -> list[CatogorySchema]:
+    response = requests.get("https://fakestoreapi.com/products")
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="External API error")
+
+    response_json = response.json()
+
+    categories: list[CatogorySchema] = []
+
+    for item in response_json:
+        category = CatogorySchema(**item)
+        if category not in categories:
+            categories.append(category)
+
+    return list(categories)
